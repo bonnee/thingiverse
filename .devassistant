@@ -1,0 +1,17 @@
+dependencies:
+- rpm:
+  - python${py3}
+- if $venv:
+  - rpm:
+    - python-virtualenv
+- else:
+  - rpm:
+    - python-setuptools
+devassistant_version: 0.10.0.dev2
+original_kwargs:
+  github: !!python/unicode 'hroncok'
+  name: !!python/unicode 'thingiverse'
+  venv: !!python/unicode ''
+project_type:
+- python
+- lib
