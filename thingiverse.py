@@ -134,7 +134,7 @@ class Thingiverse:
         try:
             self._session = self._service.get_auth_session(data=data)
         except KeyError as e:
-            logging.debug(e)
+            logging.debug(str(e))
             logging.debug('key error, going to try to get it again')
             self._fetch_access_code()
             self._get_access_token()
@@ -160,7 +160,7 @@ class Thingiverse:
             self._parse_result = True
 
         except requests.exceptions.RequestException as e:
-            logging.debug(e)
+            logging.debug(str(e))
             logging.debug('Error %d: %s' %
                           (self._r2.status_code, self._r2.reason))
             if self._retry_count == 0:
@@ -171,7 +171,7 @@ class Thingiverse:
                 raise e
 
         except AttributeError as e:
-            logging.debug(e)
+            logging.debug(str(e))
             self._fetch_access_code()
 
     def _check_request(self):
@@ -221,7 +221,7 @@ class Thingiverse:
         try:
             new = self._r2.json()[self._new_count]
         except ValueError as e:
-            logging.debug(e)
+            logging.debug(str(e))
             return
 
         for key, value in new.items():
