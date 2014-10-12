@@ -1,26 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-try:
-    from setuptools import setup, find_packages
-except:
-    from distutils.core import setup, find_packages
+from setuptools import setup, find_packages
 
 setup(
     name='thingiverse',
     version='0.0.1',
-    description='Short description',
+    description='Python Thingiverse API wrapper',
     long_description=''.join(open('README.rst').readlines()),
-    keywords='some, keywords',
-    author='yourname',
-    author_email='yourmail',
-    license='GPLv2',
+    keywords='thingiverse, 3D, API, 3D printing',
+    author='Erin RobotGrrl',
+    author_email='erin@robotgrrl.com',
+    maintainer='Miro Hrončok',
+    maintainer_email='miro@hroncok.cz',
+    install_requires=['rauth', 'requests'],
+    license='MIT',
     packages=find_packages(),
     classifiers=[
         'Development Status :: 3 - Alpha',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
+        'Topic :: Multimedia :: Graphics :: 3D Modeling',
+        'License :: OSI Approved :: MIT License',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
-        ]
+    ]
 )
