@@ -96,17 +96,7 @@ class Thingiverse:
 
     def _fetch_access_code(self):
         if self.DEBUG: print 'fetch_access_code'
-
-        sleep(1.0)
-
-        for line in urllib2.urlopen(''):
-            print line
-            self._access_code = line
-
-        if(self._access_code == ''):
-            self._fetch_access_code()
-
-        #self._access_code = raw_input("access token: >")
+        self._access_code = raw_input("access token: >")
 
 
 
