@@ -1,3 +1,4 @@
+# Copyright (c) 2014 Erin RobotGrrl <erin@robotgrrl.com>, MIT license
 import sys
 from rauth import OAuth2Service
 import webbrowser
