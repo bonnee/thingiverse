@@ -76,7 +76,7 @@ class Thingiverse:
         logging.debug('fetch_access_code')
         self._access_code = raw_input("access token: >")
 
-    def _get_access_code(self):
+    def _get_access_code(self, token=''):
         logging.debug('get_access_code')
 
         # self._service = OAuth2Service(
@@ -96,53 +96,58 @@ class Thingiverse:
             authorize_url='https://www.thingiverse.com/login/oauth/authorize',
             base_url='https://api.thingiverse.com')
 
-        # let's get the url to go to
-        params = {'redirect_uri': self._appinfo['redirect_uri'],
-                  'response_type': 'code'}
-        url = self._service.get_authorize_url(**params)
+        if not token:
+            # let's get the url to go to
+            params = {'redirect_uri': self._appinfo['redirect_uri'],
+                      'response_type': 'code'}
+            url = self._service.get_authorize_url(**params)
 
-        # nope
-        # req = urllib2.Request(url)
-        # fd = urllib2.urlopen(req)
-        # data = fd.readlines()
-        # fd.close()
-        # print data
+            # nope
+            # req = urllib2.Request(url)
+            # fd = urllib2.urlopen(req)
+            # data = fd.readlines()
+            # fd.close()
+            # print data
 
-        logging.info(url)
+            logging.info(url)
+    
+            if self.txt_url_mode == False:
+                webbrowser.open_new(url)
 
-        if self.txt_url_mode == False:
-            webbrowser.open_new(url)
+            else:
+                f = open('url.txt', 'w')
+                f.write(url)
+                f.close()
+                sleep(30.0)
 
-        else:
-            f = open('url.txt', 'w')
-            f.write(url)
-            f.close()
-            sleep(30.0)
-
-        self._fetch_access_code()
-
-    def _get_access_token(self):
-        logging.debug('get_access_token')
-        # now we can ask for an access token
-        # it's given to us after we retrieve it from the above url
-
-        data = {'client_id': self._service.client_id,
-                'client_secret': self._service.client_secret,
-                'code': self._access_code}
-
-        logging.debug(data)
-
-        try:
-            self._session = self._service.get_auth_session(data=data)
-        except KeyError as e:
-            logging.debug(str(e))
-            logging.debug('key error, going to try to get it again')
             self._fetch_access_code()
-            self._get_access_token()
 
-    def connect(self):
-        self._get_access_code()
-        self._get_access_token()
+    def _get_session(self, token=''):
+        logging.debug('get_session')
+        if token:
+            self._session = self._service.get_session(token=token)
+        else:
+            # now we can ask for an access token
+            # it's given to us after we retrieve it from the above url
+
+            data = {'client_id': self._service.client_id,
+                    'client_secret': self._service.client_secret,
+                    'code': self._access_code}
+
+            logging.debug(data)
+
+            try:
+                self._session = self._service.get_auth_session(data=data)
+                logging.debug(self._session.access_token)
+            except KeyError as e:
+                logging.debug(str(e))
+                logging.debug('key error, going to try to get it again')
+                self._fetch_access_code()
+                self._get_session()
+
+    def connect(self, token=''):
+        self._get_access_code(token=token)
+        self._get_session(token=token)
 
     # Misc
 
