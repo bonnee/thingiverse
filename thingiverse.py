@@ -299,7 +299,7 @@ class Thingiverse:
         returns the user
         """
         logging.debug('get_profile')
-        s = "/users/%s"
+        s = "/users/%s" % user
         return self._get_it(s, None)
 
     def update_profile(self, user, data):
