@@ -2,7 +2,7 @@
 import sys
 from rauth import OAuth2Service
 import webbrowser
-import urllib2
+import urllib
 from time import sleep
 import json
 import requests
@@ -705,7 +705,7 @@ class Thingiverse:
         """
         logging.debug('finalize_file')
         s = "/files/%d/finalize" % (file_id)
-        return self._post_it(s)
+        return self._post_it(s, None)
 
     # Copies
 
